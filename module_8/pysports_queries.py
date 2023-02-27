@@ -10,7 +10,7 @@ config = {
     "password": "MySQL8IsGreat!",
     "host": "127.0.0.1",
     "database": "pysports",
-    "raise_on_warnings": True
+    "raise_on_warningcs": True
 }
 
 try:
