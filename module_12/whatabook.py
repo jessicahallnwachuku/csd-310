@@ -1,5 +1,7 @@
 # Import necessary modules
+import sys
 import mysql.connector
+from mysql.connector import errorcode
 
 # Define main menu function
 def show_main_menu():
@@ -8,7 +10,8 @@ def show_main_menu():
     print("1. View books")
     print("2. View store locations")
     print("3. My account")
-    print("4. Exit program")
+    print("4. Create User")
+    print("5. Exit program")
 
     # Prompt user to select an option
     choice = input("Enter your choice: ")
@@ -21,6 +24,8 @@ def show_main_menu():
     elif choice == "3":
         show_account_menu()
     elif choice == "4":
+        create_user()
+    elif choice == "5":
         print("Goodbye!")
         exit()
     else:
@@ -224,6 +229,33 @@ def add_book_to_wishlist(user_id, book_id):
     # Close cursor and connection
     cursor.close()
     cnx.close()
+# Define function to create a new user
+def create_user():
+    # Connect to the database
+    cnx = mysql.connector.connect(user='root', password='Nathan0821.',
+                              host='127.0.0.1',
+                              database='whatabook')
+
+    # Create cursor
+    cursor = cnx.cursor()
+
+    # Prompt user for new user's details
+    first_name = input("Enter new user's first name: ")
+    last_name = input("Enter new user's last name: ")
+
+    # Execute query to create new user
+    query = "INSERT INTO user (first_name, last_name) VALUES ('{}', '{}')".format(first_name, last_name)
+    cursor.execute(query)
+
+    # Commit changes to the database
+    cnx.commit()
+
+    print("New user '{}' '{}' created.".format(first_name, last_name))
+
+    # Close cursor and connection
+    cursor.close()
+    cnx.close()
+
 
 # Define main function
 def main():
